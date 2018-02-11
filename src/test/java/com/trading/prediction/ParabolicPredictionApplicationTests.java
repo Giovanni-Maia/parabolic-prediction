@@ -1,4 +1,4 @@
-package com.trading.bot;
+package com.trading.prediction;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
