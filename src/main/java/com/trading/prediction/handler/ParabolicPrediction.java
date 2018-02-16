@@ -2,10 +2,7 @@ package com.trading.prediction.handler;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedMap;
-import java.util.Map.Entry;
 
 import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
@@ -16,7 +13,7 @@ import com.trading.prediction.base.Prediction;
 public class ParabolicPrediction {
 
 	public static Prediction predict(SortedMap<Long, Double> readings, String coinPair, String interval) {
-		WeightedObservedPoints points = fetchParabolicPoints(readings);
+		WeightedObservedPoints points = PredictionUtils.fetchPoints(readings, 3, 1);
 
 		PolynomialCurveFitter fitter = PolynomialCurveFitter.create(2);
 		double[] coefs = fitter.fit(points.toList());
@@ -46,68 +43,6 @@ public class ParabolicPrediction {
 		prediction.setFirstDerivativePrediction(firstDerivative.value(instantPrediction.toEpochMilli()));
 		prediction.setSecondDerivativePrediction(secondDerivative.value(instantPrediction.toEpochMilli()));
 		return prediction;
-	}
-
-	private enum Trend {
-		UP, DOWN
-	}
-
-	public static WeightedObservedPoints fetchParabolicPoints(SortedMap<Long, Double> readings) {
-		WeightedObservedPoints points = new WeightedObservedPoints();
-
-		boolean alreadyFoundFirstChange = false;
-
-		Trend currentTrend = null;
-
-		List<Long> keys = new ArrayList<>();
-		keys.addAll(readings.keySet());
-
-		Long lastKey = keys.get(keys.size() - 1);
-
-		for (Long key : readings.keySet()) {
-			System.out.println("CANDIDATE POINT: " + key + ", " + readings.get(key));
-		}
-
-		for (int i = keys.size() - 2; i >= 0; i--) {
-			Long key = keys.get(i);
-
-			if (currentTrend == null) {
-				if (readings.get(key) >= readings.get(lastKey)) {
-					currentTrend = Trend.UP;
-				} else {
-					currentTrend = Trend.DOWN;
-				}
-				lastKey = key;
-				continue;
-			}
-			if (readings.get(key) >= readings.get(lastKey)) {
-				if (currentTrend == Trend.DOWN) {
-					if (!alreadyFoundFirstChange) {
-						currentTrend = Trend.UP;
-						alreadyFoundFirstChange = true;
-					} else {
-						break;
-					}
-				}
-			} else {
-				if (currentTrend == Trend.UP) {
-					if (!alreadyFoundFirstChange) {
-						currentTrend = Trend.DOWN;
-						alreadyFoundFirstChange = true;
-					} else {
-						break;
-					}
-				}
-			}
-			lastKey = key;
-		}
-
-		for (Entry<Long, Double> entry : readings.tailMap(lastKey).entrySet()) {
-			System.out.println("FINAL POINT: " + entry.getKey() + ", " + entry.getValue());
-			points.add(entry.getKey(), entry.getValue());
-		}
-
-		return points;
 	}
 
 }

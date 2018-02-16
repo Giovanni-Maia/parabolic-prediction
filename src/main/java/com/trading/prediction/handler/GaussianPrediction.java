@@ -14,7 +14,7 @@ import com.trading.prediction.base.Prediction;
 public class GaussianPrediction {
 
 	public static Prediction predict(SortedMap<Long, Double> readings, String coinPair, String interval) {
-		WeightedObservedPoints points = ParabolicPrediction.fetchParabolicPoints(readings);
+		WeightedObservedPoints points = PredictionUtils.fetchPoints(readings, 3, 1);
 
 		GaussianCurveFitter fitter = GaussianCurveFitter.create();
 		double[] coefs = fitter.fit(points.toList());

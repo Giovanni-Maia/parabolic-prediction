@@ -58,7 +58,7 @@ public class PredictionController {
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
 
 		Instant instantFrom = Instant.now();
-		instantFrom = instantFrom.minus(intervalDuration.multipliedBy(10));
+		instantFrom = instantFrom.minus(intervalDuration.multipliedBy(20));
 
 		ResponseEntity<HistoryData> response = restTemplate
 				.getForEntity("http://bot.cryptoinvest.money:31337/trading/history/prices/exchange/kucoin/pair/"
