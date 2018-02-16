@@ -13,7 +13,7 @@ import com.trading.prediction.base.Prediction;
 public class ParabolicPrediction {
 
 	public static Prediction predict(SortedMap<Long, Double> readings, String coinPair, String interval) {
-		WeightedObservedPoints points = PredictionUtils.fetchPoints(readings, 3, 1);
+		WeightedObservedPoints points = PredictionUtils.fetchPoints(readings, 2, 1);
 
 		PolynomialCurveFitter fitter = PolynomialCurveFitter.create(2);
 		double[] coefs = fitter.fit(points.toList());
