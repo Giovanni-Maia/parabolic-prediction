@@ -1,4 +1,4 @@
-package com.trading.prediction;
+package com.trading;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ParabolicPredictionApplicationTests {
+public class PredictionApplicationTests {
 
 	@Test
 	public void contextLoads() {

@@ -1,4 +1,4 @@
-package com.trading.prediction.base;
+package com.trading.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

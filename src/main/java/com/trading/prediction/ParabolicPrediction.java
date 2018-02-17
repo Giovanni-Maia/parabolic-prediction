@@ -1,4 +1,4 @@
-package com.trading.prediction.handler;
+package com.trading.prediction;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -8,23 +8,22 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math3.fitting.PolynomialCurveFitter;
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 
-import com.trading.prediction.base.Prediction;
+import com.trading.base.Prediction;
+import com.trading.base.Utils;
 
 public class ParabolicPrediction {
 
 	public static Prediction predict(SortedMap<Long, Double> readings, String coinPair, String interval) {
-		WeightedObservedPoints points = PredictionUtils.fetchPoints(readings, 2, 1);
+		WeightedObservedPoints points = Utils.fetchPoints(readings, 2, 0);
 
 		PolynomialCurveFitter fitter = PolynomialCurveFitter.create(2);
 		double[] coefs = fitter.fit(points.toList());
 
 		PolynomialFunction function = new PolynomialFunction(coefs);
 		System.out.println("FUNCTION: " + function);
-		PolynomialFunction firstDerivative = (PolynomialFunction) function.derivative();
-		PolynomialFunction secondDerivative = (PolynomialFunction) firstDerivative.derivative();
 
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
-		Instant instantPrediction = Instant.now();
+		Instant instantPrediction = Instant.ofEpochMilli((long)points.toList().get(points.toList().size() - 1).getX());
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
 		Prediction prediction = new Prediction();
@@ -32,16 +31,10 @@ public class ParabolicPrediction {
 
 		prediction.setTimestampNow((long) points.toList().get(points.toList().size() - 1).getX());
 		prediction.setPriceNow(points.toList().get(points.toList().size() - 1).getY());
-		prediction.setErrorNow(function.value(points.toList().get(points.toList().size() - 1).getX())
-				- points.toList().get(points.toList().size() - 1).getY());
-		prediction.setFirstDerivativeNow(firstDerivative.value(points.toList().get(points.toList().size() - 1).getX()));
-		prediction
-				.setSecondDerivativeNow(secondDerivative.value(points.toList().get(points.toList().size() - 1).getX()));
+		prediction.setPriceNowPrediction(function.value(points.toList().get(points.toList().size() - 1).getX()));
 
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setPricePrediction(function.value(instantPrediction.toEpochMilli()));
-		prediction.setFirstDerivativePrediction(firstDerivative.value(instantPrediction.toEpochMilli()));
-		prediction.setSecondDerivativePrediction(secondDerivative.value(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 

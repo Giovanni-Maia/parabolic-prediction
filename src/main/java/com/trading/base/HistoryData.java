@@ -1,4 +1,4 @@
-package com.trading.prediction.base;
+package com.trading.base;
 
 import java.util.List;
 

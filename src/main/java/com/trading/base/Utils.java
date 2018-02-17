@@ -1,13 +1,13 @@
-package com.trading.prediction.handler;
+package com.trading.base;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 import java.util.Map.Entry;
+import java.util.SortedMap;
 
 import org.apache.commons.math3.fitting.WeightedObservedPoints;
 
-public class PredictionUtils {
+public class Utils {
 
 	private enum Trend {
 		UP, DOWN
@@ -71,5 +71,25 @@ public class PredictionUtils {
 		}
 
 		return points;
+	}
+
+	public static double[] getXs(SortedMap<Long, Double> readings) {
+		double[] x = new double[readings.size()];
+		int i = 0;
+		for(Long key : readings.keySet()) {
+			x[i] = key;
+			i++;
+		}
+		return x;
+	}
+
+	public static double[] getYs(SortedMap<Long, Double> readings) {
+		double[] y = new double[readings.size()];
+		int i = 0;
+		for(Double value : readings.values()) {
+			y[i] = value;
+			i++;
+		}
+		return y;
 	}
 }
