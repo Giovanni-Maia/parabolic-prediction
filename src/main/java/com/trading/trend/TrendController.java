@@ -21,7 +21,7 @@ public class TrendController {
 	private DataReader dataReader;
 
 	@RequestMapping(value = "/linear/{coinPair}/{interval}")
-	public Prediction parabolic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	public Prediction linear(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
 		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
 		
@@ -29,6 +29,146 @@ public class TrendController {
 		double[] y = Utils.getYs(readings);
 
 		TrendLine trendLine = new PolyTrendLine(1);
+
+		trendLine.setValues(y, x);
+
+		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		instantPrediction = instantPrediction.plus(intervalDuration);
+
+		Prediction prediction = new Prediction();
+		prediction.setCoinPair(coinPair);
+
+		prediction.setTimestampNow((long)x[x.length-1]);
+		prediction.setPriceNow(y[y.length-1]);
+		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
+
+		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
+		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		return prediction;
+	}
+
+	@RequestMapping(value = "/parabolic/{coinPair}/{interval}")
+	public Prediction parabolic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+
+		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		
+		double[] x = Utils.getXs(readings);
+		double[] y = Utils.getYs(readings);
+
+		TrendLine trendLine = new PolyTrendLine(2);
+
+		trendLine.setValues(y, x);
+
+		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		instantPrediction = instantPrediction.plus(intervalDuration);
+
+		Prediction prediction = new Prediction();
+		prediction.setCoinPair(coinPair);
+
+		prediction.setTimestampNow((long)x[x.length-1]);
+		prediction.setPriceNow(y[y.length-1]);
+		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
+
+		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
+		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		return prediction;
+	}
+
+	@RequestMapping(value = "/cubic/{coinPair}/{interval}")
+	public Prediction cubic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+
+		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		
+		double[] x = Utils.getXs(readings);
+		double[] y = Utils.getYs(readings);
+
+		TrendLine trendLine = new PolyTrendLine(3);
+
+		trendLine.setValues(y, x);
+
+		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		instantPrediction = instantPrediction.plus(intervalDuration);
+
+		Prediction prediction = new Prediction();
+		prediction.setCoinPair(coinPair);
+
+		prediction.setTimestampNow((long)x[x.length-1]);
+		prediction.setPriceNow(y[y.length-1]);
+		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
+
+		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
+		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		return prediction;
+	}
+
+	@RequestMapping(value = "/exp/{coinPair}/{interval}")
+	public Prediction exp(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+
+		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		
+		double[] x = Utils.getXs(readings);
+		double[] y = Utils.getYs(readings);
+
+		TrendLine trendLine = new ExpTrendLine();
+
+		trendLine.setValues(y, x);
+
+		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		instantPrediction = instantPrediction.plus(intervalDuration);
+
+		Prediction prediction = new Prediction();
+		prediction.setCoinPair(coinPair);
+
+		prediction.setTimestampNow((long)x[x.length-1]);
+		prediction.setPriceNow(y[y.length-1]);
+		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
+
+		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
+		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		return prediction;
+	}
+
+	@RequestMapping(value = "/power/{coinPair}/{interval}")
+	public Prediction power(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+
+		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		
+		double[] x = Utils.getXs(readings);
+		double[] y = Utils.getYs(readings);
+
+		TrendLine trendLine = new PowerTrendLine();
+
+		trendLine.setValues(y, x);
+
+		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		instantPrediction = instantPrediction.plus(intervalDuration);
+
+		Prediction prediction = new Prediction();
+		prediction.setCoinPair(coinPair);
+
+		prediction.setTimestampNow((long)x[x.length-1]);
+		prediction.setPriceNow(y[y.length-1]);
+		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
+
+		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
+		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		return prediction;
+	}
+
+	@RequestMapping(value = "/log/{coinPair}/{interval}")
+	public Prediction log(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+
+		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		
+		double[] x = Utils.getXs(readings);
+		double[] y = Utils.getYs(readings);
+
+		TrendLine trendLine = new LogTrendLine();
 
 		trendLine.setValues(y, x);
 
