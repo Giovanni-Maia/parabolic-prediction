@@ -9,6 +9,7 @@ public class Prediction {
 	private long timestampPrediction;
 	private double pricePrediction;
 	private String trend;
+	private double profitPrediction;
 	
 	public String getCoinPair() {
 		return coinPair;
@@ -33,7 +34,8 @@ public class Prediction {
 	}
 	public void setPriceNowPrediction(double priceNowPrediction) {
 		if(pricePrediction != 0) {
-			setTrend(((pricePrediction - priceNowPrediction)/priceNowPrediction)*100d);
+			setProfitPrediction(pricePrediction - priceNowPrediction);
+			setTrend((getProfitPrediction()/priceNowPrediction)*100d);
 		}
 		this.priceNowPrediction = priceNowPrediction;
 	}
@@ -48,7 +50,8 @@ public class Prediction {
 	}
 	public void setPricePrediction(double pricePrediction) {
 		if(priceNowPrediction != 0) {
-			setTrend(((pricePrediction - priceNowPrediction)/priceNowPrediction)*100d);
+			setProfitPrediction(pricePrediction - priceNowPrediction);
+			setTrend((getProfitPrediction()/priceNowPrediction)*100d);
 		}
 		this.pricePrediction = pricePrediction;
 	}
@@ -58,5 +61,11 @@ public class Prediction {
 	public void setTrend(double trend) {
 		DecimalFormat df2 = new DecimalFormat("#0.00");
 		this.trend = df2.format(trend)+"%";
+	}
+	public double getProfitPrediction() {
+		return profitPrediction;
+	}
+	public void setProfitPrediction(double profitPrediction) {
+		this.profitPrediction = profitPrediction;
 	}
 }
