@@ -2,9 +2,11 @@ package com.trading.base;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -18,7 +20,7 @@ public class DataReader {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	public SortedMap<Long, Double> fetchReadingsOrdered(String coinPair, String interval) {
+	public SortedMap<Long, List<Double>> fetchReadingsOrdered(String coinPair, String interval) {
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
 
 		Instant instantFrom = Instant.now();
@@ -29,9 +31,9 @@ public class DataReader {
 						+ coinPair + "/aggregation/" + interval + "/from/" + instantFrom.toEpochMilli() + "/to/"
 						+ Instant.now().toEpochMilli(), HistoryData.class);
 
-		SortedMap<Long, Double> readings = new TreeMap<>();
+		SortedMap<Long, List<Double>> readings = new TreeMap<>();
 		for (Buckets bucket : response.getBody().payload.aggregations.all.buckets) {
-			readings.put(bucket.key, bucket.buy.value);
+			readings.put(bucket.key, Lists.newArrayList(bucket.buy.value, bucket.sell.value));
 		}
 		return readings;
 	}

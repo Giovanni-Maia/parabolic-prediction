@@ -2,6 +2,7 @@ package com.trading.trend;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.SortedMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class TrendController {
 	@RequestMapping(value = "/linear/{coinPair}/{interval}")
 	public Prediction linear(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
 		
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -39,19 +40,20 @@ public class TrendController {
 		Prediction prediction = new Prediction();
 		prediction.setCoinPair(coinPair);
 
-		prediction.setTimestampNow((long)x[x.length-1]);
-		prediction.setPriceNow(y[y.length-1]);
-		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
-
+		prediction.setTimestampNow(readings.lastKey());
+		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
+		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
+	
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
-		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 
 	@RequestMapping(value = "/parabolic/{coinPair}/{interval}")
 	public Prediction parabolic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
 		
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -67,19 +69,20 @@ public class TrendController {
 		Prediction prediction = new Prediction();
 		prediction.setCoinPair(coinPair);
 
-		prediction.setTimestampNow((long)x[x.length-1]);
-		prediction.setPriceNow(y[y.length-1]);
-		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
-
+		prediction.setTimestampNow(readings.lastKey());
+		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
+		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
+	
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
-		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 
 	@RequestMapping(value = "/cubic/{coinPair}/{interval}")
 	public Prediction cubic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
 		
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -95,19 +98,20 @@ public class TrendController {
 		Prediction prediction = new Prediction();
 		prediction.setCoinPair(coinPair);
 
-		prediction.setTimestampNow((long)x[x.length-1]);
-		prediction.setPriceNow(y[y.length-1]);
-		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
-
+		prediction.setTimestampNow(readings.lastKey());
+		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
+		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
+	
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
-		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 
 	@RequestMapping(value = "/exp/{coinPair}/{interval}")
 	public Prediction exp(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
 		
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -123,19 +127,20 @@ public class TrendController {
 		Prediction prediction = new Prediction();
 		prediction.setCoinPair(coinPair);
 
-		prediction.setTimestampNow((long)x[x.length-1]);
-		prediction.setPriceNow(y[y.length-1]);
-		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
-
+		prediction.setTimestampNow(readings.lastKey());
+		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
+		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
+	
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
-		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 
 	@RequestMapping(value = "/power/{coinPair}/{interval}")
 	public Prediction power(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
 		
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -151,19 +156,20 @@ public class TrendController {
 		Prediction prediction = new Prediction();
 		prediction.setCoinPair(coinPair);
 
-		prediction.setTimestampNow((long)x[x.length-1]);
-		prediction.setPriceNow(y[y.length-1]);
-		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
-
+		prediction.setTimestampNow(readings.lastKey());
+		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
+		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
+	
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
-		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 
 	@RequestMapping(value = "/log/{coinPair}/{interval}")
 	public Prediction log(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, Double> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
 		
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -179,12 +185,13 @@ public class TrendController {
 		Prediction prediction = new Prediction();
 		prediction.setCoinPair(coinPair);
 
-		prediction.setTimestampNow((long)x[x.length-1]);
-		prediction.setPriceNow(y[y.length-1]);
-		prediction.setPriceNowPrediction(trendLine.predict(x[x.length-1]));
-
+		prediction.setTimestampNow(readings.lastKey());
+		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
+		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
+	
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
-		prediction.setPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
+		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 

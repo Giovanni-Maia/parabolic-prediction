@@ -13,12 +13,12 @@ public class Utils {
 		UP, DOWN
 	}
 
-	public static WeightedObservedPoints fetchPoints(SortedMap<Long, Double> readings, int numberOfKnots, int percentageVariation) {
+	public static WeightedObservedPoints fetchPoints(SortedMap<Long, List<Double>> readings, int numberOfKnots, int percentageVariation) {
 		double PERCENTAGE_VARIATION = ((double)percentageVariation)/100d;
 		
 		WeightedObservedPoints points = new WeightedObservedPoints();
 
-		int numberOfKnotsFound = 1;
+		int numberOfKnotsFound = 0;
 
 		Trend currentTrend = null;
 
@@ -35,7 +35,7 @@ public class Utils {
 			Long key = keys.get(i);
 
 			if (currentTrend == null) {
-				if (readings.get(key) >= readings.get(lastKey)) {
+				if (readings.get(key).get(0) >= readings.get(lastKey).get(0)) {
 					currentTrend = Trend.UP;
 				} else {
 					currentTrend = Trend.DOWN;
@@ -43,7 +43,7 @@ public class Utils {
 				lastKey = key;
 				continue;
 			}
-			if (readings.get(key) >= (readings.get(lastKey)*(1.0d+PERCENTAGE_VARIATION))) {
+			if (readings.get(key).get(0) >= (readings.get(lastKey).get(0)*(1.0d+PERCENTAGE_VARIATION))) {
 				if (currentTrend == Trend.DOWN) {
 					numberOfKnotsFound += 1;
 					if (numberOfKnots != numberOfKnotsFound) {
@@ -52,7 +52,7 @@ public class Utils {
 						break;
 					}
 				}
-			} else if(readings.get(key) <= (readings.get(lastKey)*(1.0d-PERCENTAGE_VARIATION))){
+			} else if(readings.get(key).get(0) <= (readings.get(lastKey).get(0)*(1.0d-PERCENTAGE_VARIATION))){
 				if (currentTrend == Trend.UP) {
 					numberOfKnotsFound += 1;
 					if (numberOfKnots != numberOfKnotsFound) {
@@ -65,15 +65,15 @@ public class Utils {
 			lastKey = key;
 		}
 
-		for (Entry<Long, Double> entry : readings.tailMap(lastKey).entrySet()) {
-			System.out.println("FINAL POINT: " + entry.getKey() + ", " + entry.getValue());
-			points.add(entry.getKey(), entry.getValue());
+		for (Entry<Long, List<Double>> entry : readings.tailMap(lastKey).entrySet()) {
+			System.out.println("FINAL POINT: " + entry.getKey() + ", " + entry.getValue().get(0));
+			points.add(entry.getKey(), entry.getValue().get(0));
 		}
 
 		return points;
 	}
 
-	public static double[] getXs(SortedMap<Long, Double> readings) {
+	public static double[] getXs(SortedMap<Long, List<Double>> readings) {
 		double[] x = new double[readings.size()];
 		int i = 0;
 		for(Long key : readings.keySet()) {
@@ -83,11 +83,11 @@ public class Utils {
 		return x;
 	}
 
-	public static double[] getYs(SortedMap<Long, Double> readings) {
+	public static double[] getYs(SortedMap<Long, List<Double>> readings) {
 		double[] y = new double[readings.size()];
 		int i = 0;
-		for(Double value : readings.values()) {
-			y[i] = value;
+		for(List<Double> value : readings.values()) {
+			y[i] = value.get(0);
 			i++;
 		}
 		return y;

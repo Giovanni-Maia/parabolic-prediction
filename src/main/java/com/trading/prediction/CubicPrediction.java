@@ -2,6 +2,7 @@ package com.trading.prediction;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 import java.util.SortedMap;
 
 import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
@@ -13,7 +14,7 @@ import com.trading.base.Utils;
 
 public class CubicPrediction {
 
-	public static Prediction predict(SortedMap<Long, Double> readings, String coinPair, String interval) {
+	public static Prediction predict(SortedMap<Long, List<Double>> readings, String coinPair, String interval) {
 		WeightedObservedPoints points = Utils.fetchPoints(readings, 3, 0);
 
 		PolynomialCurveFitter fitter = PolynomialCurveFitter.create(3);
@@ -29,12 +30,13 @@ public class CubicPrediction {
 		Prediction prediction = new Prediction();
 		prediction.setCoinPair(coinPair);
 
-		prediction.setTimestampNow((long) points.toList().get(points.toList().size() - 1).getX());
-		prediction.setPriceNow(points.toList().get(points.toList().size() - 1).getY());
-		prediction.setPriceNowPrediction(function.value(points.toList().get(points.toList().size() - 1).getX()));
-
+		prediction.setTimestampNow(readings.lastKey());
+		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
+		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
+	
+		prediction.setBuyPriceNowPrediction(function.value(readings.get(readings.lastKey()).get(0)));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
-		prediction.setPricePrediction(function.value(instantPrediction.toEpochMilli()));
+		prediction.setBuyPricePrediction(function.value(instantPrediction.toEpochMilli()));
 		return prediction;
 	}
 }

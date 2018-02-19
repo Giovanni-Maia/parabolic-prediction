@@ -1,70 +1,90 @@
 package com.trading.base;
 
-import java.text.DecimalFormat;
-
 public class Prediction {
 	private String coinPair;
 	private long timestampNow;
-	private double priceNow, priceNowPrediction;
+	private double buyPriceNow, sellPriceNow, buyPriceNowPrediction;
 	private long timestampPrediction;
-	private double pricePrediction;
-	private String trend;
+	private double buyPricePrediction;
+	private double trendPercentage;
 	private double profitPrediction;
-	
+
 	public String getCoinPair() {
 		return coinPair;
 	}
+
 	public void setCoinPair(String coinPair) {
 		this.coinPair = coinPair;
 	}
+
 	public long getTimestampNow() {
 		return timestampNow;
 	}
+
 	public void setTimestampNow(long timestampNow) {
 		this.timestampNow = timestampNow;
 	}
-	public double getPriceNow() {
-		return priceNow;
+
+	public double getBuyPriceNow() {
+		return buyPriceNow;
 	}
-	public void setPriceNow(double priceNow) {
-		this.priceNow = priceNow;
+
+	public void setBuyPriceNow(double buyPriceNow) {
+		this.buyPriceNow = buyPriceNow;
 	}
-	public double getPriceNowPrediction() {
-		return priceNowPrediction;
+
+	public double getBuyPriceNowPrediction() {
+		return buyPriceNowPrediction;
 	}
-	public void setPriceNowPrediction(double priceNowPrediction) {
-		if(pricePrediction != 0) {
-			setProfitPrediction(pricePrediction - priceNowPrediction);
-			setTrend((getProfitPrediction()/priceNowPrediction)*100d);
+
+	public void setBuyPriceNowPrediction(double buyPriceNowPrediction) {
+		if (buyPricePrediction != 0) {
+			setProfitPrediction(buyPricePrediction - buyPriceNowPrediction);
+			setTrendPercentage((getProfitPrediction() / buyPriceNowPrediction) * 100d);
 		}
-		this.priceNowPrediction = priceNowPrediction;
+		this.buyPriceNowPrediction = buyPriceNowPrediction;
 	}
+
 	public long getTimestampPrediction() {
 		return timestampPrediction;
 	}
+
 	public void setTimestampPrediction(long timestampPrediction) {
 		this.timestampPrediction = timestampPrediction;
 	}
-	public double getPricePrediction() {
-		return pricePrediction;
+
+	public double getBuyPricePrediction() {
+		return buyPricePrediction;
 	}
-	public void setPricePrediction(double pricePrediction) {
-		if(priceNowPrediction != 0) {
-			setProfitPrediction(pricePrediction - priceNowPrediction);
-			setTrend((getProfitPrediction()/priceNowPrediction)*100d);
+
+	public void setBuyPricePrediction(double buyPricePrediction) {
+		if (buyPriceNowPrediction != 0) {
+			setProfitPrediction(buyPricePrediction - buyPriceNowPrediction);
+			setTrendPercentage((getProfitPrediction() / buyPriceNowPrediction) * 100d);
 		}
-		this.pricePrediction = pricePrediction;
+		this.buyPricePrediction = buyPricePrediction;
 	}
-	public String getTrend() {
-		return trend;
+
+	public double getSellPriceNow() {
+		return sellPriceNow;
 	}
-	public void setTrend(double trend) {
-		DecimalFormat df2 = new DecimalFormat("#0.00");
-		this.trend = df2.format(trend)+"%";
+
+	public void setSellPriceNow(double sellPriceNow) {
+		this.sellPriceNow = sellPriceNow;
 	}
+
+	public double getTrendPercentage() {
+		return trendPercentage;
+	}
+
+	public void setTrendPercentage(double trendPercentage) {
+		this.trendPercentage = trendPercentage;
+	}
+
 	public double getProfitPrediction() {
 		return profitPrediction;
 	}
+
 	public void setProfitPrediction(double profitPrediction) {
 		this.profitPrediction = profitPrediction;
 	}
