@@ -43,8 +43,8 @@ public class TrendController {
 		prediction.setTimestampNow(readings.lastKey());
 		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
 		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
-	
-		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
+
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.lastKey()));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
@@ -72,8 +72,8 @@ public class TrendController {
 		prediction.setTimestampNow(readings.lastKey());
 		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
 		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
-	
-		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
+
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.lastKey()));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
@@ -101,8 +101,8 @@ public class TrendController {
 		prediction.setTimestampNow(readings.lastKey());
 		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
 		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
-	
-		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
+
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.lastKey()));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
@@ -130,8 +130,8 @@ public class TrendController {
 		prediction.setTimestampNow(readings.lastKey());
 		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
 		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
-	
-		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
+
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.lastKey()));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
@@ -159,8 +159,8 @@ public class TrendController {
 		prediction.setTimestampNow(readings.lastKey());
 		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
 		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
-	
-		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
+
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.lastKey()));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;
@@ -188,8 +188,8 @@ public class TrendController {
 		prediction.setTimestampNow(readings.lastKey());
 		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
 		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
-	
-		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.get(readings.lastKey()).get(0)));
+
+		prediction.setBuyPriceNowPrediction(trendLine.predict(readings.lastKey()));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setBuyPricePrediction(trendLine.predict(instantPrediction.toEpochMilli()));
 		return prediction;

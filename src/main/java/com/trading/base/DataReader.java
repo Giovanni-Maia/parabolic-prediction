@@ -2,11 +2,11 @@ package com.trading.base;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,10 @@ public class DataReader {
 
 		SortedMap<Long, List<Double>> readings = new TreeMap<>();
 		for (Buckets bucket : response.getBody().payload.aggregations.all.buckets) {
-			readings.put(bucket.key, Lists.newArrayList(bucket.buy.value, bucket.sell.value));
+			List<Double> buySell = new ArrayList<>();
+			buySell.add(bucket.buy.value);
+			buySell.add(bucket.sell.value);
+			readings.put(bucket.key, buySell);
 		}
 		return readings;
 	}

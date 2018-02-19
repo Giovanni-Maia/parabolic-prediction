@@ -34,7 +34,7 @@ public class CubicPrediction {
 		prediction.setBuyPriceNow(readings.get(readings.lastKey()).get(0));
 		prediction.setSellPriceNow(readings.get(readings.lastKey()).get(1));
 	
-		prediction.setBuyPriceNowPrediction(function.value(readings.get(readings.lastKey()).get(0)));
+		prediction.setBuyPriceNowPrediction(function.value(readings.lastKey()));
 		prediction.setTimestampPrediction(instantPrediction.toEpochMilli());
 		prediction.setBuyPricePrediction(function.value(instantPrediction.toEpochMilli()));
 		return prediction;
