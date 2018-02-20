@@ -21,11 +21,13 @@ public class TrendController {
 	@Autowired
 	private DataReader dataReader;
 
-	@RequestMapping(value = "/linear/{coinPair}/{interval}")
-	public Prediction linear(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	@RequestMapping(value = "/linear/{coinPair}/{intervalData}/{intervalPrediction}")
+	public Prediction linear(@PathVariable("coinPair") String coinPair,
+			@PathVariable("intervalData") String intervalData,
+			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
-		
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
+
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
 
@@ -33,8 +35,8 @@ public class TrendController {
 
 		trendLine.setValues(y, x);
 
-		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
-		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		Duration intervalDuration = Duration.parse("PT" + intervalPrediction.toUpperCase());
+		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
 		Prediction prediction = new Prediction();
@@ -53,8 +55,8 @@ public class TrendController {
 	@RequestMapping(value = "/parabolic/{coinPair}/{interval}")
 	public Prediction parabolic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
-		
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
 
@@ -63,7 +65,7 @@ public class TrendController {
 		trendLine.setValues(y, x);
 
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
-		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
 		Prediction prediction = new Prediction();
@@ -82,8 +84,8 @@ public class TrendController {
 	@RequestMapping(value = "/cubic/{coinPair}/{interval}")
 	public Prediction cubic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
-		
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
 
@@ -92,7 +94,7 @@ public class TrendController {
 		trendLine.setValues(y, x);
 
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
-		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
 		Prediction prediction = new Prediction();
@@ -111,8 +113,8 @@ public class TrendController {
 	@RequestMapping(value = "/exp/{coinPair}/{interval}")
 	public Prediction exp(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
-		
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
 
@@ -121,7 +123,7 @@ public class TrendController {
 		trendLine.setValues(y, x);
 
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
-		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
 		Prediction prediction = new Prediction();
@@ -140,8 +142,8 @@ public class TrendController {
 	@RequestMapping(value = "/power/{coinPair}/{interval}")
 	public Prediction power(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
-		
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
 
@@ -150,7 +152,7 @@ public class TrendController {
 		trendLine.setValues(y, x);
 
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
-		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
 		Prediction prediction = new Prediction();
@@ -169,8 +171,8 @@ public class TrendController {
 	@RequestMapping(value = "/log/{coinPair}/{interval}")
 	public Prediction log(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
-		
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
 
@@ -179,7 +181,7 @@ public class TrendController {
 		trendLine.setValues(y, x);
 
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
-		Instant instantPrediction = Instant.ofEpochMilli((long)x[x.length-1]);
+		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
 		Prediction prediction = new Prediction();

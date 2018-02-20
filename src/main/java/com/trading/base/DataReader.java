@@ -19,8 +19,9 @@ public class DataReader {
 
 	@Autowired
 	private RestTemplate restTemplate;
-	
-	public SortedMap<Long, List<Double>> fetchReadingsOrdered(String coinPair, String interval) {
+
+	public SortedMap<Long, List<Double>> fetchReadingsAggIntervalData20xIntervalOrdered(String coinPair,
+			String interval) {
 		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
 
 		Instant instantFrom = Instant.now();
@@ -30,6 +31,39 @@ public class DataReader {
 				.getForEntity("http://bot.cryptoinvest.money:31337/trading/history/prices/exchange/kucoin/pair/"
 						+ coinPair + "/aggregation/" + interval + "/from/" + instantFrom.toEpochMilli() + "/to/"
 						+ Instant.now().toEpochMilli(), HistoryData.class);
+
+		if (!response.getBody().success) {
+			System.out.println("ERROR FETCHING DATA: " + response.getBody().message
+					+ (response.getBody().payload != null ? " (" + response.getBody().payload.message + ")" : ""));
+			return null;
+		}
+
+		SortedMap<Long, List<Double>> readings = new TreeMap<>();
+		for (Buckets bucket : response.getBody().payload.aggregations.all.buckets) {
+			List<Double> buySell = new ArrayList<>();
+			buySell.add(bucket.buy.value);
+			buySell.add(bucket.sell.value);
+			readings.put(bucket.key, buySell);
+		}
+		return readings;
+	}
+
+	public SortedMap<Long, List<Double>> fetchReadingsAgg5mDataIntervalOrdered(String coinPair, String interval) {
+		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+
+		Instant instantFrom = Instant.now();
+		instantFrom = instantFrom.minus(intervalDuration);
+
+		ResponseEntity<HistoryData> response = restTemplate.getForEntity(
+				"http://bot.cryptoinvest.money:31337/trading/history/prices/exchange/kucoin/pair/" + coinPair
+						+ "/aggregation/5m/from/" + instantFrom.toEpochMilli() + "/to/" + Instant.now().toEpochMilli(),
+				HistoryData.class);
+
+		if (!response.getBody().success) {
+			System.out.println("ERROR FETCHING DATA: " + response.getBody().message
+					+ (response.getBody().payload != null ? " (" + response.getBody().payload.message + ")" : ""));
+			return null;
+		}
 
 		SortedMap<Long, List<Double>> readings = new TreeMap<>();
 		for (Buckets bucket : response.getBody().payload.aggregations.all.buckets) {

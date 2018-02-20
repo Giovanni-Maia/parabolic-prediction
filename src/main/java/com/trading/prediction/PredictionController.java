@@ -21,16 +21,16 @@ public class PredictionController {
 	@RequestMapping(value = "/parabolic/{coinPair}/{interval}")
 	public Prediction parabolic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
 
 		Prediction prediction = ParabolicPrediction.predict(readings, coinPair, interval);
 		return prediction;
 	}
 
 	@RequestMapping(value = "/cubic/{coinPair}/{interval}")
-	public Prediction spline(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	public Prediction cubic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
 
 		Prediction prediction = CubicPrediction.predict(readings, coinPair, interval);
 		return prediction;
@@ -39,7 +39,7 @@ public class PredictionController {
 	@RequestMapping(value = "/gaussian/{coinPair}/{interval}")
 	public Prediction gaussian(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
 
 		Prediction prediction = GaussianPrediction.predict(readings, coinPair, interval);
 		return prediction;

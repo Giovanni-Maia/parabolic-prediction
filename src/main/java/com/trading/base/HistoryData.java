@@ -25,6 +25,7 @@ public class HistoryData extends BaseResponse {
 		}
 
 		public Aggregations aggregations;
+		public String message;
 	}
 
 	public Payload payload;
