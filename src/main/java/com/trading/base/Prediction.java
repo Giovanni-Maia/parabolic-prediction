@@ -5,9 +5,8 @@ public class Prediction {
 	private long timestampNow;
 	private double buyPriceNow, sellPriceNow, buyPriceNowPrediction;
 	private long timestampPrediction;
-	private double buyPricePrediction;
+	private double buyPricePrediction, profitPrediction;
 	private double trendPercentage;
-	private double profitPrediction;
 
 	public String getCoinPair() {
 		return coinPair;
@@ -73,19 +72,19 @@ public class Prediction {
 		this.sellPriceNow = sellPriceNow;
 	}
 
-	public double getTrendPercentage() {
-		return trendPercentage;
-	}
-
-	public void setTrendPercentage(double trendPercentage) {
-		this.trendPercentage = trendPercentage;
-	}
-
 	public double getProfitPrediction() {
 		return profitPrediction;
 	}
 
 	public void setProfitPrediction(double profitPrediction) {
 		this.profitPrediction = profitPrediction;
+	}
+
+	public double getTrendPercentage() {
+		return trendPercentage;
+	}
+
+	public void setTrendPercentage(double trendPercentage) {
+		this.trendPercentage = trendPercentage;
 	}
 }
