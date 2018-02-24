@@ -6,6 +6,7 @@ import java.net.URL;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -18,15 +19,13 @@ import com.trading.base.DataReader;
 @SpringBootApplication
 public class PredictionApplication {
 
+	@Value("${bot.env.openPortAWS:false}")
+	private boolean openPortAWS;
+
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(PredictionApplication.class, args);
 	}
-	
-	@Bean
-	public DataReader getDataReader() {
-		return new DataReader();
-	}
-	
+
 	@Bean
 	public RestTemplate getRestTemplate() throws RestClientException, Exception {
 		HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
@@ -38,9 +37,11 @@ public class PredictionApplication {
 		restTemplate.getForEntity(
 				"http://bot.cryptoinvest.money:31337/trading/auth/login/apikey/sga!/environment/sandbox", String.class);
 
-		restTemplate.getForEntity("http://bot.cryptoinvest.money:31337/management/ec2/allow/giovanni/ip/" + getMyIPv4(),
-				String.class);
-	
+		if (openPortAWS) {
+			restTemplate.getForEntity(
+					"http://bot.cryptoinvest.money:31337/management/ec2/allow/giovanni/ip/" + getMyIPv4(),
+					String.class);
+		}
 		return restTemplate;
 	}
 
@@ -48,5 +49,10 @@ public class PredictionApplication {
 		URL whatismyip = new URL("http://checkip.amazonaws.com");
 		BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
 		return in.readLine();
+	}
+
+	@Bean
+	public DataReader getDataReader() {
+		return new DataReader();
 	}
 }

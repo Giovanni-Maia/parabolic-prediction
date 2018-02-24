@@ -52,10 +52,12 @@ public class TrendController {
 		return prediction;
 	}
 
-	@RequestMapping(value = "/parabolic/{coinPair}/{interval}")
-	public Prediction parabolic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	@RequestMapping(value = "/parabolic/{coinPair}/{intervalData}/{intervalPrediction}")
+	public Prediction parabolic(@PathVariable("coinPair") String coinPair, 
+			@PathVariable("intervalData") String intervalData,
+			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -64,7 +66,7 @@ public class TrendController {
 
 		trendLine.setValues(y, x);
 
-		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Duration intervalDuration = Duration.parse("PT" + intervalPrediction.toUpperCase());
 		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
@@ -81,10 +83,12 @@ public class TrendController {
 		return prediction;
 	}
 
-	@RequestMapping(value = "/cubic/{coinPair}/{interval}")
-	public Prediction cubic(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	@RequestMapping(value = "/cubic/{coinPair}/{intervalData}/{intervalPrediction}")
+	public Prediction cubic(@PathVariable("coinPair") String coinPair, 
+			@PathVariable("intervalData") String intervalData,
+			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -93,7 +97,7 @@ public class TrendController {
 
 		trendLine.setValues(y, x);
 
-		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Duration intervalDuration = Duration.parse("PT" + intervalPrediction.toUpperCase());
 		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
@@ -110,10 +114,12 @@ public class TrendController {
 		return prediction;
 	}
 
-	@RequestMapping(value = "/exp/{coinPair}/{interval}")
-	public Prediction exp(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	@RequestMapping(value = "/exp/{coinPair}/{intervalData}/{intervalPrediction}")
+	public Prediction exp(@PathVariable("coinPair") String coinPair, 
+			@PathVariable("intervalData") String intervalData,
+			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -122,7 +128,7 @@ public class TrendController {
 
 		trendLine.setValues(y, x);
 
-		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Duration intervalDuration = Duration.parse("PT" + intervalPrediction.toUpperCase());
 		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
@@ -139,10 +145,12 @@ public class TrendController {
 		return prediction;
 	}
 
-	@RequestMapping(value = "/power/{coinPair}/{interval}")
-	public Prediction power(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	@RequestMapping(value = "/power/{coinPair}/{intervalData}/{intervalPrediction}")
+	public Prediction power(@PathVariable("coinPair") String coinPair, 
+			@PathVariable("intervalData") String intervalData,
+			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -151,7 +159,7 @@ public class TrendController {
 
 		trendLine.setValues(y, x);
 
-		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Duration intervalDuration = Duration.parse("PT" + intervalPrediction.toUpperCase());
 		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
@@ -168,10 +176,12 @@ public class TrendController {
 		return prediction;
 	}
 
-	@RequestMapping(value = "/log/{coinPair}/{interval}")
-	public Prediction log(@PathVariable("coinPair") String coinPair, @PathVariable("interval") String interval) {
+	@RequestMapping(value = "/log/{coinPair}/{intervalData}/{intervalPrediction}")
+	public Prediction log(@PathVariable("coinPair") String coinPair, 
+			@PathVariable("intervalData") String intervalData,
+			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAggIntervalData20xIntervalOrdered(coinPair, interval);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -180,7 +190,7 @@ public class TrendController {
 
 		trendLine.setValues(y, x);
 
-		Duration intervalDuration = Duration.parse("PT" + interval.toUpperCase());
+		Duration intervalDuration = Duration.parse("PT" + intervalPrediction.toUpperCase());
 		Instant instantPrediction = Instant.ofEpochMilli((long) x[x.length - 1]);
 		instantPrediction = instantPrediction.plus(intervalDuration);
 
