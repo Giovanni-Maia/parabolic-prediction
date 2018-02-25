@@ -26,7 +26,7 @@ public class TrendController {
 			@PathVariable("intervalData") String intervalData,
 			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -57,7 +57,7 @@ public class TrendController {
 			@PathVariable("intervalData") String intervalData,
 			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -88,7 +88,7 @@ public class TrendController {
 			@PathVariable("intervalData") String intervalData,
 			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -119,7 +119,7 @@ public class TrendController {
 			@PathVariable("intervalData") String intervalData,
 			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -150,7 +150,7 @@ public class TrendController {
 			@PathVariable("intervalData") String intervalData,
 			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);
@@ -181,7 +181,7 @@ public class TrendController {
 			@PathVariable("intervalData") String intervalData,
 			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair, intervalData);
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsDataIntervalOrdered(coinPair, intervalData);
 
 		double[] x = Utils.getXs(readings);
 		double[] y = Utils.getYs(readings);

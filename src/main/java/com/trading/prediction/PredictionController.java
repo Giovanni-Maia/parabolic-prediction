@@ -23,7 +23,7 @@ public class PredictionController {
 			@PathVariable("intervalData") String intervalData,
 			@PathVariable("intervalPrediction") String intervalPrediction) {
 
-		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsAgg5mDataIntervalOrdered(coinPair,
+		SortedMap<Long, List<Double>> readings = dataReader.fetchReadingsDataIntervalOrdered(coinPair,
 				intervalData);
 
 		Prediction prediction = LinearPrediction.predict(readings, coinPair, intervalPrediction);
