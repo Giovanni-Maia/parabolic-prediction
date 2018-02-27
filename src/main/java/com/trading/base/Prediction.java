@@ -5,7 +5,8 @@ public class Prediction {
 	private long timestampNow;
 	private double buyPriceNow, sellPriceNow, buyPriceNowPrediction, sellPriceNowPrediction;
 	private long timestampPrediction;
-	private double buyPricePrediction, sellPricePrediction, profitPrediction, profitPredictionPercentage;
+	private double buyPricePrediction, sellPricePrediction, buyProfitPrediction, buyProfitPredictionPercentage,
+			sellProfitPrediction, sellProfitPredictionPercentage;
 
 	public String getCoinPair() {
 		return coinPair;
@@ -44,6 +45,10 @@ public class Prediction {
 	}
 
 	public void setBuyPriceNowPrediction(double buyPriceNowPrediction) {
+		if (buyPricePrediction != 0) {
+			setBuyProfitPrediction(buyPricePrediction - buyPriceNowPrediction);
+			setBuyProfitPredictionPercentage((getBuyProfitPrediction() / buyPriceNowPrediction) * 100d);
+		}
 		this.buyPriceNowPrediction = buyPriceNowPrediction;
 	}
 
@@ -52,6 +57,10 @@ public class Prediction {
 	}
 
 	public void setSellPriceNowPrediction(double sellPriceNowPrediction) {
+		if (sellPricePrediction != 0) {
+			setSellProfitPrediction(sellPricePrediction - sellPriceNowPrediction);
+			setSellProfitPredictionPercentage((getSellProfitPrediction() / sellPriceNowPrediction) * 100d);
+		}
 		this.sellPriceNowPrediction = sellPriceNowPrediction;
 	}
 
@@ -68,6 +77,10 @@ public class Prediction {
 	}
 
 	public void setBuyPricePrediction(double buyPricePrediction) {
+		if (buyPriceNowPrediction != 0) {
+			setBuyProfitPrediction(buyPricePrediction - buyPriceNowPrediction);
+			setBuyProfitPredictionPercentage((getBuyProfitPrediction() / buyPriceNowPrediction) * 100d);
+		}
 		this.buyPricePrediction = buyPricePrediction;
 	}
 
@@ -76,22 +89,42 @@ public class Prediction {
 	}
 
 	public void setSellPricePrediction(double sellPricePrediction) {
+		if (sellPriceNowPrediction != 0) {
+			setSellProfitPrediction(sellPricePrediction - sellPriceNowPrediction);
+			setSellProfitPredictionPercentage((getSellProfitPrediction() / sellPriceNowPrediction) * 100d);
+		}
 		this.sellPricePrediction = sellPricePrediction;
 	}
 
-	public double getProfitPrediction() {
-		return profitPrediction;
+	public double getBuyProfitPrediction() {
+		return buyProfitPrediction;
 	}
 
-	public void setProfitPrediction(double profitPrediction) {
-		this.profitPrediction = profitPrediction;
+	public void setBuyProfitPrediction(double buyProfitPrediction) {
+		this.buyProfitPrediction = buyProfitPrediction;
 	}
 
-	public double getProfitPredictionPercentage() {
-		return profitPredictionPercentage;
+	public double getBuyProfitPredictionPercentage() {
+		return buyProfitPredictionPercentage;
 	}
 
-	public void setProfitPredictionPercentage(double profitPredictionPercentage) {
-		this.profitPredictionPercentage = profitPredictionPercentage;
+	public void setBuyProfitPredictionPercentage(double buyProfitPredictionPercentage) {
+		this.buyProfitPredictionPercentage = buyProfitPredictionPercentage;
+	}
+
+	public double getSellProfitPrediction() {
+		return sellProfitPrediction;
+	}
+
+	public void setSellProfitPrediction(double sellProfitPrediction) {
+		this.sellProfitPrediction = sellProfitPrediction;
+	}
+
+	public double getSellProfitPredictionPercentage() {
+		return sellProfitPredictionPercentage;
+	}
+
+	public void setSellProfitPredictionPercentage(double sellProfitPredictionPercentage) {
+		this.sellProfitPredictionPercentage = sellProfitPredictionPercentage;
 	}
 }
