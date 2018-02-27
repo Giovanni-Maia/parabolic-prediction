@@ -3,9 +3,9 @@ package com.trading.base;
 public class Prediction {
 	private String coinPair;
 	private long timestampNow;
-	private double buyPriceNow, sellPriceNow, buyPriceNowPrediction;
+	private double buyPriceNow, sellPriceNow, buyPriceNowPrediction, sellPriceNowPrediction;
 	private long timestampPrediction;
-	private double buyPricePrediction, profitPrediction, profitPredictionPercentage;
+	private double buyPricePrediction, sellPricePrediction, profitPrediction, profitPredictionPercentage;
 
 	public String getCoinPair() {
 		return coinPair;
@@ -31,16 +31,28 @@ public class Prediction {
 		this.buyPriceNow = buyPriceNow;
 	}
 
+	public double getSellPriceNow() {
+		return sellPriceNow;
+	}
+
+	public void setSellPriceNow(double sellPriceNow) {
+		this.sellPriceNow = sellPriceNow;
+	}
+
 	public double getBuyPriceNowPrediction() {
 		return buyPriceNowPrediction;
 	}
 
 	public void setBuyPriceNowPrediction(double buyPriceNowPrediction) {
-		if (buyPricePrediction != 0) {
-			setProfitPrediction(buyPricePrediction - buyPriceNowPrediction);
-			setProfitPredictionPercentage((getProfitPrediction() / buyPriceNowPrediction) * 100d);
-		}
 		this.buyPriceNowPrediction = buyPriceNowPrediction;
+	}
+
+	public double getSellPriceNowPrediction() {
+		return sellPriceNowPrediction;
+	}
+
+	public void setSellPriceNowPrediction(double sellPriceNowPrediction) {
+		this.sellPriceNowPrediction = sellPriceNowPrediction;
 	}
 
 	public long getTimestampPrediction() {
@@ -56,19 +68,15 @@ public class Prediction {
 	}
 
 	public void setBuyPricePrediction(double buyPricePrediction) {
-		if (buyPriceNowPrediction != 0) {
-			setProfitPrediction(buyPricePrediction - buyPriceNowPrediction);
-			setProfitPredictionPercentage((getProfitPrediction() / buyPriceNowPrediction) * 100d);
-		}
 		this.buyPricePrediction = buyPricePrediction;
 	}
 
-	public double getSellPriceNow() {
-		return sellPriceNow;
+	public double getSellPricePrediction() {
+		return sellPricePrediction;
 	}
 
-	public void setSellPriceNow(double sellPriceNow) {
-		this.sellPriceNow = sellPriceNow;
+	public void setSellPricePrediction(double sellPricePrediction) {
+		this.sellPricePrediction = sellPricePrediction;
 	}
 
 	public double getProfitPrediction() {
